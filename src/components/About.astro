@@ -1,16 +1,38 @@
 ---
-import { BRANCH_TYPES, hueOf } from '../lib/branch-types';
+import { BRANCH_TYPES } from '../lib/branch-types';
 import { DEFAULT_LENGTH, MAX_LENGTH, MIN_LENGTH } from '../lib/branch-name';
 
 /*
  * The prose below the generator. It exists so the page has something to index
  * and something to answer with — the widget itself is opaque to a crawler.
  *
+ * Everything lives in one collapsed FAQ, including what used to be the "How it
+ * works" and "Options" panels: the answers are still in the HTML of every
+ * response, which is all a crawler needs, but the page no longer buries the
+ * generator under two screens of prose.
+ *
  * `FAQ` is the single source for both the visible questions and the FAQPage
  * JSON-LD at the bottom: schema that disagrees with the page is worse than no
- * schema, so neither is allowed to drift from the other.
+ * schema, so neither is allowed to drift from the other. `example` is rendered
+ * as a code block and appended to the schema answer, so the two still match.
  */
-const FAQ: { q: string; a: string }[] = [
+const types = BRANCH_TYPES.map((type) => `${type}/`).join(', ');
+
+const FAQ: { q: string; a: string; example?: string }[] = [
+	{
+		q: 'How does the generator work?',
+		a: 'Paste a JIRA link, a bare ticket key such as PROJ-142, or just the task title — whatever is on your clipboard. The ticket key is pulled out, the rest is slugified into the title, and one branch name is built for every branch type you have ticked, the unprefixed name first. There is no generate button: the list is rebuilt on every keystroke, and clicking a row copies it.',
+		example: `https://acme.atlassian.net/browse/PROJ-142 Add pagination to the feed query
+
+PROJ-142-add-pagination-to-the-feed-query
+feature/PROJ-142-add-pagination-to-the-feed-query
+bugfix/PROJ-142-add-pagination-to-the-feed-query
+hotfix/PROJ-142-add-pagination-to-the-feed-query`,
+	},
+	{
+		q: 'Which options can I change?',
+		a: `Branch types — ${types} — one name per ticked type. Word separator: - or _ between words, with the ticket key keeping its own hyphen either way. Lowercase, on by default, lowercases the title; "Lowercase TICKET-123", off by default, lowercases the ticket key too, so trackers keep matching the branch. Include date prefixes today's date, as in feature/20260806-PROJ-142-…. Max length is the character budget for the whole name, prefix included: ${DEFAULT_LENGTH} by default, anywhere between ${MIN_LENGTH} and ${MAX_LENGTH}. Theme is light, dark, or match the system — the default.`,
+	},
 	{
 		q: 'What is a good git branch naming convention?',
 		a: 'Most teams settle on <type>/<TICKET-KEY>-<short-title>, for example feature/PROJ-142-add-feed-pagination. The type prefix groups branches in tooling, the ticket key links the branch back to the issue tracker, and the slugified title says what the branch does without anyone opening it. Keep the title lowercase, use one separator throughout, and stay somewhere around 60 characters.',
@@ -48,89 +70,41 @@ const FAQ: { q: string; a: string }[] = [
 const faqSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'FAQPage',
-	mainEntity: FAQ.map(({ q, a }) => ({
+	mainEntity: FAQ.map(({ q, a, example }) => ({
 		'@type': 'Question',
 		name: q,
-		acceptedAnswer: { '@type': 'Answer', text: a },
+		acceptedAnswer: { '@type': 'Answer', text: example ? `${a}\n\n${example}` : a },
 	})),
 };
 ---
 
-<section class="about" aria-labelledby="about-title">
-	<h2 id="about-title" class="sr-only">About the git branch name generator</h2>
+<section class="about" aria-labelledby="faq-title">
+	<article class="glass panel">
+		<h2 id="faq-title">Frequently asked questions</h2>
 
-	<div class="cols">
-		<article class="glass panel">
-			<h3>How it works</h3>
-			<p>
-				Paste a JIRA link, a bare ticket key such as <code>PROJ-142</code>, or just the task title — whatever is on
-				your clipboard. The ticket key is pulled out, the rest is slugified into the title, and one branch name is
-				built for every branch type you have ticked, the unprefixed name first.
-			</p>
-			<pre><code>https://acme.atlassian.net/browse/PROJ-142 Add pagination to the feed query
-
-PROJ-142-add-pagination-to-the-feed-query
-feature/PROJ-142-add-pagination-to-the-feed-query
-bugfix/PROJ-142-add-pagination-to-the-feed-query
-hotfix/PROJ-142-add-pagination-to-the-feed-query</code></pre>
-			<p>
-				There is no generate button: the list is rebuilt on every keystroke, and clicking a row copies it. Names are
-				trimmed to the length budget on a word boundary, accents are transliterated, and anything git would reject is
-				replaced by the separator.
-			</p>
-		</article>
-
-		<article class="glass panel">
-			<h3>Options</h3>
-			<dl>
-				<dt>Branch types</dt>
-				<dd>
-					{
-						BRANCH_TYPES.map((type, i) => (
-							<>
-								{i > 0 && ', '}
-								<code style={`color: ${hueOf(type)}`}>{type}/</code>
-							</>
-						))
-					}{' '}— one name per ticked type.
-				</dd>
-
-				<dt>Word separator</dt>
-				<dd><code>-</code> or <code>_</code> between words. The ticket key keeps its own hyphen either way.</dd>
-
-				<dt>Lowercase</dt>
-				<dd>Lowercases the title. On by default; the ticket key is governed separately.</dd>
-
-				<dt>Lowercase <code>TICKET-123</code></dt>
-				<dd>Lowercases the ticket key too. Off by default, so trackers keep matching the branch.</dd>
-
-				<dt>Include date</dt>
-				<dd>Prefixes today's date, as in <code>feature/20260806-PROJ-142-…</code></dd>
-
-				<dt>Max length</dt>
-				<dd>
-					Character budget for the whole name, prefix included. Default <code>{DEFAULT_LENGTH}</code>, between{' '}
-					<code>{MIN_LENGTH}</code> and <code>{MAX_LENGTH}</code>.
-				</dd>
-
-				<dt>Theme</dt>
-				<dd>Light, dark, or match the system — the default.</dd>
-			</dl>
-		</article>
-	</div>
-
-	<article class="glass panel faq">
-		<h3>Frequently asked questions</h3>
-		<div class="qa">
-			{
-				FAQ.map(({ q, a }) => (
-					<div>
-						<h4>{q}</h4>
+		{
+			FAQ.map(({ q, a, example }, i) => (
+				<details name="faq" open={i === 0}>
+					<summary>
+						<h3>{q}</h3>
+						<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+							<path
+								d="m6 9 6 6 6-6"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+					</summary>
+					<div class="answer">
 						<p>{a}</p>
+						{/* prettier-ignore */}
+						{example && <pre><code>{example}</code></pre>}
 					</div>
-				))
-			}
-		</div>
+				</details>
+			))
+		}
 	</article>
 
 	<script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
@@ -138,69 +112,90 @@ hotfix/PROJ-142-add-pagination-to-the-feed-query</code></pre>
 
 <style>
 	.about {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
 		margin-top: 10px;
 	}
 
-	.cols {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-		gap: 20px;
-		align-items: start;
-	}
-
 	.panel {
-		padding: 22px 24px;
+		padding: 8px 24px;
 	}
 
-	/* Visually hidden, still read by crawlers and screen readers — the section
-	   needs a heading, the layout does not. */
-	.sr-only {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		margin: -1px;
-		padding: 0;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
-	}
-
-	h3 {
-		margin: 0 0 12px;
+	h2 {
+		margin: 14px 0 4px;
 		font-size: 16px;
 		font-weight: 600;
 		letter-spacing: -0.015em;
 	}
 
-	h4 {
-		margin: 0 0 5px;
+	details {
+		border-top: 1px solid var(--glass-edge-low);
+	}
+
+	details:first-of-type {
+		border-top: none;
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 13px 0;
+		cursor: pointer;
+		list-style: none;
+		color: var(--ink);
+	}
+
+	/* Safari still paints the disclosure triangle without this. */
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	summary:hover,
+	details[open] summary {
+		color: var(--ink);
+	}
+
+	summary:focus-visible {
+		outline: none;
+		border-radius: 8px;
+		box-shadow: 0 0 0 3px var(--accent-soft);
+	}
+
+	h3 {
+		margin: 0;
 		font-size: 13.5px;
 		font-weight: 600;
 		letter-spacing: -0.008em;
 	}
 
+	.chev {
+		flex: none;
+		color: var(--ink-3);
+		transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.3, 1);
+	}
+
+	summary:hover .chev {
+		color: var(--ink);
+	}
+
+	details[open] .chev {
+		transform: rotate(180deg);
+	}
+
+	.answer {
+		padding: 0 0 16px;
+		max-width: 74ch;
+	}
+
 	p {
-		margin: 0 0 12px;
+		margin: 0;
 		font-size: 13.5px;
 		line-height: 1.62;
 		color: var(--ink-2);
 	}
 
-	p:last-child {
-		margin-bottom: 0;
-	}
-
-	code {
-		font-family: var(--font-mono);
-		font-size: 0.92em;
-		color: var(--ink);
-	}
-
 	pre {
-		margin: 0 0 12px;
+		margin: 12px 0 0;
 		padding: 14px 16px;
 		border-radius: var(--r-md);
 		background: var(--field);
@@ -209,42 +204,10 @@ hotfix/PROJ-142-add-pagination-to-the-feed-query</code></pre>
 	}
 
 	pre code {
+		font-family: var(--font-mono);
 		font-size: 12px;
 		line-height: 1.75;
 		color: var(--ink-2);
 		white-space: pre;
-	}
-
-	dl {
-		margin: 0;
-		font-size: 13.5px;
-	}
-
-	dt {
-		font-weight: 600;
-		letter-spacing: -0.008em;
-	}
-
-	dd {
-		margin: 2px 0 12px;
-		color: var(--ink-2);
-		line-height: 1.6;
-	}
-
-	dd:last-child {
-		margin-bottom: 0;
-	}
-
-	.qa {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-		gap: 18px 28px;
-	}
-
-	@media (max-width: 900px) {
-		.cols,
-		.qa {
-			grid-template-columns: minmax(0, 1fr);
-		}
 	}
 </style>

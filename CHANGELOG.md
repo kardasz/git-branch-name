@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-08-06
+
+Puts the prose back in its place. The generator had two screens of explanation
+below it; now there is one collapsed FAQ, and the page ends shortly after the
+thing you came to use.
+
+### Added
+
+- The frequently asked questions are collapsible — one answer open at a time,
+  the first one to start with. Every answer is still in the page source, so
+  search engines and assistants read the same text they did before.
+
+### Changed
+
+- "How it works" and "Options" are no longer separate panels: they are the
+  first two questions in the FAQ, keeping the worked example and the full
+  description of every option.
+
 ## [1.1.0] - 2026-08-06
 
 Makes the site findable. Search engines and chat assistants had almost nothing
@@ -71,6 +89,7 @@ no analytics, and nothing is sent anywhere.
   it is remembered across visits.
 - A git graph drifts behind the glass surface of the page.
 
-[Unreleased]: https://github.com/kardasz/git-branch-name/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/kardasz/git-branch-name/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/kardasz/git-branch-name/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/kardasz/git-branch-name/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/kardasz/git-branch-name/releases/tag/v1.0.0
