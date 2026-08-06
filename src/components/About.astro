@@ -1,0 +1,250 @@
+---
+import { BRANCH_TYPES, hueOf } from '../lib/branch-types';
+import { DEFAULT_LENGTH, MAX_LENGTH, MIN_LENGTH } from '../lib/branch-name';
+
+/*
+ * The prose below the generator. It exists so the page has something to index
+ * and something to answer with — the widget itself is opaque to a crawler.
+ *
+ * `FAQ` is the single source for both the visible questions and the FAQPage
+ * JSON-LD at the bottom: schema that disagrees with the page is worse than no
+ * schema, so neither is allowed to drift from the other.
+ */
+const FAQ: { q: string; a: string }[] = [
+	{
+		q: 'What is a good git branch naming convention?',
+		a: 'Most teams settle on <type>/<TICKET-KEY>-<short-title>, for example feature/PROJ-142-add-feed-pagination. The type prefix groups branches in tooling, the ticket key links the branch back to the issue tracker, and the slugified title says what the branch does without anyone opening it. Keep the title lowercase, use one separator throughout, and stay somewhere around 60 characters.',
+	},
+	{
+		q: 'How do I turn a JIRA ticket into a branch name?',
+		a: 'Paste the whole issue link — https://your-company.atlassian.net/browse/PROJ-142 — followed by the issue summary. The key PROJ-142 is pulled out of the link, the rest becomes the slugified title, and every prefixed variant is generated at once. A key inside a URL always wins over one in the surrounding text, because that is the issue you actually linked.',
+	},
+	{
+		q: 'Which branch prefixes should I use?',
+		a: 'feature/ for new work, bugfix/ for a defect on the current line, hotfix/ for something going straight to production, release/ for a version being cut, chore/ for maintenance, docs/ for documentation, refactor/ for changes that keep behaviour, and test/ for test-only work. Generate them all and copy the one that fits, or untick the types your team does not use.',
+	},
+	{
+		q: 'Should a branch name use hyphens or underscores?',
+		a: 'Both are legal in a git ref, and hyphens are the common default — they match the ticket key and read better in a pull-request list. Underscores suit teams whose tooling already uses them. Switch with the word separator option; the ticket key keeps its own hyphen either way, so PROJ-142 stays greppable and JIRA still matches the branch to the issue.',
+	},
+	{
+		q: 'Why is the ticket key kept uppercase?',
+		a: 'Because it is an identifier, not a word. JIRA and most trackers match branches, commits and pull requests on the exact key, so PROJ-142 is left uppercase and keeps its own hyphen even when the title is lowercased and the separator is an underscore. Turn on "Lowercase TICKET-123" if your team prefers it lowercased anyway.',
+	},
+	{
+		q: 'How long should a git branch name be?',
+		a: `Git has no practical limit, but branch names are typed, tab-completed and read in review queues, so shorter wins. The budget here is ${DEFAULT_LENGTH} characters for the whole name including the prefix, adjustable between ${MIN_LENGTH} and ${MAX_LENGTH}. A name that does not fit is cut back at a word boundary rather than mid-word, and the row tells you it was trimmed.`,
+	},
+	{
+		q: 'Which characters are allowed in a git branch name?',
+		a: 'Git rejects spaces, the characters ~ ^ : ? * [ and \\, the sequences .. and @{, a trailing .lock, and leading or trailing dots and slashes. Rather than police that list, the generator only ever emits a–z, A–Z, 0–9, your separator and the / after the type prefix. Accents are transliterated, so "Zmień hasło" becomes zmien-haslo, and anything else collapses into a separator.',
+	},
+	{
+		q: 'Is anything I paste sent to a server?',
+		a: 'No. The page is static and the whole generator runs in your browser: there is no backend, no analytics and no network request at runtime. Ticket titles, internal project keys and customer names never leave the tab, which is the point — you can paste straight from a private tracker.',
+	},
+];
+
+const faqSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: FAQ.map(({ q, a }) => ({
+		'@type': 'Question',
+		name: q,
+		acceptedAnswer: { '@type': 'Answer', text: a },
+	})),
+};
+---
+
+<section class="about" aria-labelledby="about-title">
+	<h2 id="about-title" class="sr-only">About the git branch name generator</h2>
+
+	<div class="cols">
+		<article class="glass panel">
+			<h3>How it works</h3>
+			<p>
+				Paste a JIRA link, a bare ticket key such as <code>PROJ-142</code>, or just the task title — whatever is on
+				your clipboard. The ticket key is pulled out, the rest is slugified into the title, and one branch name is
+				built for every branch type you have ticked, the unprefixed name first.
+			</p>
+			<pre><code>https://acme.atlassian.net/browse/PROJ-142 Add pagination to the feed query
+
+PROJ-142-add-pagination-to-the-feed-query
+feature/PROJ-142-add-pagination-to-the-feed-query
+bugfix/PROJ-142-add-pagination-to-the-feed-query
+hotfix/PROJ-142-add-pagination-to-the-feed-query</code></pre>
+			<p>
+				There is no generate button: the list is rebuilt on every keystroke, and clicking a row copies it. Names are
+				trimmed to the length budget on a word boundary, accents are transliterated, and anything git would reject is
+				replaced by the separator.
+			</p>
+		</article>
+
+		<article class="glass panel">
+			<h3>Options</h3>
+			<dl>
+				<dt>Branch types</dt>
+				<dd>
+					{
+						BRANCH_TYPES.map((type, i) => (
+							<>
+								{i > 0 && ', '}
+								<code style={`color: ${hueOf(type)}`}>{type}/</code>
+							</>
+						))
+					}{' '}— one name per ticked type.
+				</dd>
+
+				<dt>Word separator</dt>
+				<dd><code>-</code> or <code>_</code> between words. The ticket key keeps its own hyphen either way.</dd>
+
+				<dt>Lowercase</dt>
+				<dd>Lowercases the title. On by default; the ticket key is governed separately.</dd>
+
+				<dt>Lowercase <code>TICKET-123</code></dt>
+				<dd>Lowercases the ticket key too. Off by default, so trackers keep matching the branch.</dd>
+
+				<dt>Include date</dt>
+				<dd>Prefixes today's date, as in <code>feature/20260806-PROJ-142-…</code></dd>
+
+				<dt>Max length</dt>
+				<dd>
+					Character budget for the whole name, prefix included. Default <code>{DEFAULT_LENGTH}</code>, between{' '}
+					<code>{MIN_LENGTH}</code> and <code>{MAX_LENGTH}</code>.
+				</dd>
+
+				<dt>Theme</dt>
+				<dd>Light, dark, or match the system — the default.</dd>
+			</dl>
+		</article>
+	</div>
+
+	<article class="glass panel faq">
+		<h3>Frequently asked questions</h3>
+		<div class="qa">
+			{
+				FAQ.map(({ q, a }) => (
+					<div>
+						<h4>{q}</h4>
+						<p>{a}</p>
+					</div>
+				))
+			}
+		</div>
+	</article>
+
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+</section>
+
+<style>
+	.about {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		margin-top: 10px;
+	}
+
+	.cols {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 20px;
+		align-items: start;
+	}
+
+	.panel {
+		padding: 22px 24px;
+	}
+
+	/* Visually hidden, still read by crawlers and screen readers — the section
+	   needs a heading, the layout does not. */
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	h3 {
+		margin: 0 0 12px;
+		font-size: 16px;
+		font-weight: 600;
+		letter-spacing: -0.015em;
+	}
+
+	h4 {
+		margin: 0 0 5px;
+		font-size: 13.5px;
+		font-weight: 600;
+		letter-spacing: -0.008em;
+	}
+
+	p {
+		margin: 0 0 12px;
+		font-size: 13.5px;
+		line-height: 1.62;
+		color: var(--ink-2);
+	}
+
+	p:last-child {
+		margin-bottom: 0;
+	}
+
+	code {
+		font-family: var(--font-mono);
+		font-size: 0.92em;
+		color: var(--ink);
+	}
+
+	pre {
+		margin: 0 0 12px;
+		padding: 14px 16px;
+		border-radius: var(--r-md);
+		background: var(--field);
+		border: 1px solid var(--field-edge);
+		overflow-x: auto;
+	}
+
+	pre code {
+		font-size: 12px;
+		line-height: 1.75;
+		color: var(--ink-2);
+		white-space: pre;
+	}
+
+	dl {
+		margin: 0;
+		font-size: 13.5px;
+	}
+
+	dt {
+		font-weight: 600;
+		letter-spacing: -0.008em;
+	}
+
+	dd {
+		margin: 2px 0 12px;
+		color: var(--ink-2);
+		line-height: 1.6;
+	}
+
+	dd:last-child {
+		margin-bottom: 0;
+	}
+
+	.qa {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 18px 28px;
+	}
+
+	@media (max-width: 900px) {
+		.cols,
+		.qa {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+</style>

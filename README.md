@@ -70,9 +70,14 @@ Name generation lives in `src/lib` and touches no DOM, so it can be reasoned abo
 ```text
 /
 ├── public/
-│   └── favicon.svg
+│   ├── apple-touch-icon.png
+│   ├── favicon.svg
+│   ├── og.png                   # 1200×630 link preview card
+│   ├── robots.txt
+│   └── sitemap.xml
 ├── src
 │   ├── components
+│   │   ├── About.astro          # the prose below the generator, and its FAQ schema
 │   │   ├── AmbientGraph.astro   # the git graph drifting behind the glass
 │   │   ├── Generator.astro      # input + results + options, owns the client script
 │   │   ├── InputCapsule.astro

@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-08-06
+
+Makes the site findable. Search engines and chat assistants had almost nothing
+to go on before: one heading, one sentence, and a widget they cannot run. There
+is now a written explanation of what the generator does below it, and links to
+the site finally unfurl with a preview card instead of a bare URL.
+
+### Added
+
+- A "How it works" section, a written reference for every option, and eight
+  frequently asked questions below the generator — what a good branch naming
+  convention looks like, hyphens versus underscores, how long a name should be,
+  which characters git allows, and why the ticket key stays uppercase.
+- Link previews. Sharing the site anywhere that reads Open Graph or Twitter
+  cards now shows a title, a description and a preview image of the generator.
+- `robots.txt` and `sitemap.xml`, a canonical link, and structured data
+  describing the page as a free developer tool and its FAQ.
+- An apple-touch icon, so the site keeps its mark when added to a home screen,
+  and a theme colour matching the light and dark backgrounds.
+
+### Changed
+
+- The browser tab and search results now read "Git Branch Name Generator — JIRA
+  ticket to branch name", with a description that says what the tool does.
+
 ## [1.0.0] - 2026-08-06
 
 First public release of [gitbranch.name](https://gitbranch.name) — a branch name
@@ -46,5 +71,6 @@ no analytics, and nothing is sent anywhere.
   it is remembered across visits.
 - A git graph drifts behind the glass surface of the page.
 
-[Unreleased]: https://github.com/kardasz/git-branch-name/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/kardasz/git-branch-name/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/kardasz/git-branch-name/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/kardasz/git-branch-name/releases/tag/v1.0.0

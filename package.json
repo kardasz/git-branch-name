@@ -1,7 +1,7 @@
 {
   "name": "git-branch-name",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "author": "Krzysztof Kardasz <krzysztof@kardasz.eu> (https://kardasz.eu)",
   "repository": {

@@ -34,6 +34,7 @@ Each `.astro` component that needs client code imports its script in a `<script>
 - **The ticket key is an identifier, not a word.** It keeps its uppercase and its own `-` even under the `_` separator and under `Lowercase`, so JIRA still links the branch to the issue. Only the explicit `Lowercase TICKET-123` option changes that. Don't "fix" this into uniform casing.
 - **A ticket key inside a URL wins** over one in the surrounding text — that's the one the person actually linked.
 - **Colour is never hardcoded in components.** Every colour resolves through a custom property in `src/styles/tokens.css`; themes are switched by redefining tokens, with `prefers-color-scheme` as the default and `data-theme` on `<html>` overriding it in both directions. An inline script in `Layout.astro` applies the stored theme before first paint — if you change `THEME_KEY` (`gbn-theme`), change it there too.
+- **Metadata is centralised.** `Layout.astro` builds every absolute URL from `Astro.site` (canonical, Open Graph, Twitter, the `WebApplication` JSON-LD) — don't hardcode `https://gitbranch.name` in a component. `About.astro`'s `FAQ` array is the single source for both the rendered questions and the `FAQPage` JSON-LD; schema that disagrees with the visible page is worse than none, so keep them generated from the one array.
 - **Result rows are built at runtime**, so their CSS lives in `src/styles/global.css`, not in a component `<style>` — Astro only scopes markup it renders itself.
 - Indentation is tabs, in `.ts`, `.astro`, and `.css` alike.
 
