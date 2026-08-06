@@ -1,0 +1,121 @@
+---
+const sponsorsUrl = 'https://github.com/sponsors/kardasz';
+---
+
+<section class="support" aria-labelledby="support-title">
+	<article class="glass support-card">
+		<div class="heart" aria-hidden="true">
+			<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+				<path
+					d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"
+					stroke="currentColor"
+					stroke-width="1.8"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+			</svg>
+		</div>
+
+		<div class="support-copy">
+			<span class="eyebrow">Free &amp; open source</span>
+			<h2 id="support-title">Does this save you time?</h2>
+			<p>Help keep Git Branch Name polished, private, and available to everyone.</p>
+		</div>
+
+		<a class="sponsor-button" href={sponsorsUrl} target="_blank" rel="noopener noreferrer">
+			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+				<path
+					d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+			</svg>
+			Sponsor on GitHub
+		</a>
+	</article>
+</section>
+
+<style>
+	.support-card {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 18px;
+		padding: 20px 22px;
+	}
+
+	.heart {
+		width: 44px;
+		height: 44px;
+		display: grid;
+		place-items: center;
+		border-radius: 14px;
+		background: var(--accent-soft);
+		color: var(--accent);
+	}
+
+	.support-copy {
+		min-width: 0;
+	}
+
+	h2 {
+		margin: 2px 0 1px;
+		font-size: 16px;
+		font-weight: 600;
+		letter-spacing: -0.015em;
+	}
+
+	p {
+		margin: 0;
+		font-size: 13px;
+		color: var(--ink-2);
+	}
+
+	.sponsor-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		min-height: 40px;
+		padding: 0 16px;
+		border-radius: 12px;
+		background: var(--accent);
+		color: var(--check-ink);
+		font-size: 13px;
+		font-weight: 600;
+		text-decoration: none;
+		box-shadow: 0 8px 18px -12px var(--accent);
+		transition:
+			transform 0.16s cubic-bezier(0.2, 0.8, 0.3, 1),
+			box-shadow 0.16s ease;
+	}
+
+	.sponsor-button:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 12px 22px -12px var(--accent);
+	}
+
+	.sponsor-button:active {
+		transform: translateY(0);
+	}
+
+	.sponsor-button:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 4px var(--accent-soft), 0 0 0 1px var(--accent);
+	}
+
+	@media (max-width: 620px) {
+		.support-card {
+			grid-template-columns: auto minmax(0, 1fr);
+			gap: 14px;
+			padding: 18px;
+		}
+
+		.sponsor-button {
+			grid-column: 1 / -1;
+			width: 100%;
+		}
+	}
+</style>

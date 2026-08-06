@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-08-06
+
+The tool stays free and ad-free; this adds a quiet way to chip in if it saves
+you time.
+
+### Added
+
+- A compact sponsor card below the generator, and a "Sponsor" link in the
+  footer, both pointing at GitHub Sponsors. Nothing is tracked and nothing is
+  loaded from GitHub — they are ordinary links.
+
 ## [1.2.0] - 2026-08-06
 
 Puts the prose back in its place. The generator had two screens of explanation
@@ -89,7 +100,8 @@ no analytics, and nothing is sent anywhere.
   it is remembered across visits.
 - A git graph drifts behind the glass surface of the page.
 
-[Unreleased]: https://github.com/kardasz/git-branch-name/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/kardasz/git-branch-name/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/kardasz/git-branch-name/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/kardasz/git-branch-name/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/kardasz/git-branch-name/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/kardasz/git-branch-name/releases/tag/v1.0.0

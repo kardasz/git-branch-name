@@ -10,6 +10,9 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License" />
   </a>
+  <a href="https://github.com/sponsors/kardasz">
+    <img src="https://img.shields.io/github/sponsors/kardasz?label=Sponsor&amp;logo=githubsponsors" alt="Sponsor on GitHub" />
+  </a>
 </p>
 
 <p align="center">
@@ -63,6 +66,10 @@ The generator pulls the ticket key out of a JIRA URL or raw text, slugifies the 
 
 Everything runs in the browser. There is no backend, no analytics, and nothing is sent anywhere.
 
+## 💖 Support
+
+If Git Branch Name saves you time, you can [sponsor its continued development on GitHub](https://github.com/sponsors/kardasz). Your support helps keep the tool polished, private, and available to everyone.
+
 ## 🚀 Project Structure
 
 Name generation lives in `src/lib` and touches no DOM, so it can be reasoned about and tested on its own; `src/scripts` holds the browser wiring.
@@ -84,6 +91,7 @@ Name generation lives in `src/lib` and touches no DOM, so it can be reasoned abo
 │   │   ├── Masthead.astro
 │   │   ├── OptionsPanel.astro
 │   │   ├── ResultList.astro
+│   │   ├── Support.astro        # compact GitHub Sponsors call to action
 │   │   ├── ThemeSwitch.astro
 │   │   └── Toast.astro
 │   ├── layouts
