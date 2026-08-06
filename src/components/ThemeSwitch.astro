@@ -1,0 +1,77 @@
+---
+// Theme control. `system` is the default and carries no `data-theme` attribute,
+// so `prefers-color-scheme` stays in charge until someone chooses otherwise.
+---
+
+<div class="theme-switch" id="theme" role="radiogroup" aria-label="Theme">
+	<button type="button" role="radio" data-mode="system" aria-checked="true" title="Match system" aria-label="Match system">
+		<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+			<rect x="1.8" y="2.8" width="12.4" height="8.4" rx="1.6"></rect>
+			<path d="M5.6 13.6h4.8"></path>
+		</svg>
+	</button>
+	<button type="button" role="radio" data-mode="light" aria-checked="false" title="Light" aria-label="Light">
+		<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+			<circle cx="8" cy="8" r="3.1"></circle>
+			<path d="M8 1.4v1.5M8 13.1v1.5M1.4 8h1.5M13.1 8h1.5M3.3 3.3l1.1 1.1M11.6 11.6l1.1 1.1M12.7 3.3l-1.1 1.1M4.4 11.6l-1.1 1.1"></path>
+		</svg>
+	</button>
+	<button type="button" role="radio" data-mode="dark" aria-checked="false" title="Dark" aria-label="Dark">
+		<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M13.4 9.8A5.8 5.8 0 0 1 6.2 2.6a5.9 5.9 0 1 0 7.2 7.2z"></path>
+		</svg>
+	</button>
+</div>
+
+<script>
+	import '../scripts/theme';
+</script>
+
+<style>
+	.theme-switch {
+		display: flex;
+		gap: 2px;
+		padding: 3px;
+		flex: none;
+		border-radius: 999px;
+		background: var(--glass);
+		backdrop-filter: blur(24px) saturate(180%);
+		-webkit-backdrop-filter: blur(24px) saturate(180%);
+		border: 1px solid var(--glass-edge-low);
+		box-shadow: inset 0 1px 0 var(--inner-top);
+	}
+
+	button {
+		width: 32px;
+		height: 28px;
+		display: grid;
+		place-items: center;
+		border: 0;
+		border-radius: 999px;
+		background: transparent;
+		color: var(--ink-3);
+		cursor: pointer;
+		transition:
+			background 0.16s ease,
+			color 0.16s ease;
+	}
+
+	button:hover {
+		color: var(--ink);
+	}
+
+	button[aria-checked='true'] {
+		background: var(--glass-strong);
+		color: var(--accent);
+		box-shadow: 0 1px 3px rgba(17, 30, 52, 0.16);
+	}
+
+	button:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 3px var(--accent-soft);
+	}
+
+	svg {
+		display: block;
+	}
+</style>

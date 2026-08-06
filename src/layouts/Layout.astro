@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'Git Branch Name',
+	description = 'Turn a JIRA link, ticket ID or task title into a ready-to-paste git branch name.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<meta name="color-scheme" content="light dark" />
+		<title>{title}</title>
+
+		<!-- Applied before first paint so a chosen theme never flashes the other one. -->
+		<script is:inline>
+			try {
+				const theme = localStorage.getItem('gbn-theme');
+				if (theme === 'dark' || theme === 'light') document.documentElement.dataset.theme = theme;
+			} catch {
+				// Storage blocked — fall back to the system preference.
+			}
+		</script>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

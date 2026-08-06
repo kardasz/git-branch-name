@@ -1,0 +1,20 @@
+---
+import AmbientGraph from '../components/AmbientGraph.astro';
+import Footer from '../components/Footer.astro';
+import Generator from '../components/Generator.astro';
+import Masthead from '../components/Masthead.astro';
+import Toast from '../components/Toast.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+	<AmbientGraph />
+
+	<div class="page">
+		<Masthead />
+		<Generator />
+		<Footer />
+	</div>
+
+	<Toast />
+</Layout>

@@ -1,0 +1,18 @@
+---
+import InputCapsule from './InputCapsule.astro';
+import OptionsPanel from './OptionsPanel.astro';
+import ResultList from './ResultList.astro';
+---
+
+<main class="workspace">
+	<section class="stage">
+		<InputCapsule />
+		<ResultList />
+	</section>
+
+	<OptionsPanel />
+</main>
+
+<script>
+	import '../scripts/app';
+</script>

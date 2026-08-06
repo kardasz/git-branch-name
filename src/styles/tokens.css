@@ -1,0 +1,161 @@
+/*
+ * Design tokens.
+ *
+ * Every colour in the app resolves through these custom properties, so the
+ * theme is switched by redefining tokens — never by restyling components.
+ *
+ * Precedence: system preference by default, overridden in both directions by
+ * `data-theme` on <html> when someone picks a theme explicitly.
+ */
+
+:root {
+	/* ground */
+	--bg-1: #eef2f8;
+	--bg-2: #f6e9f0;
+	--bg-3: #e2f0ec;
+	--bg-base: #e7ecf3;
+
+	/* ink — blue-biased neutrals, not pure grey */
+	--ink: #131c29;
+	--ink-2: #43536a;
+	--ink-3: #74839a;
+
+	/* glass */
+	--glass: rgba(255, 255, 255, 0.5);
+	--glass-strong: rgba(255, 255, 255, 0.66);
+	--glass-edge-low: rgba(19, 28, 41, 0.08);
+	--glass-shadow: 0 22px 50px -18px rgba(17, 30, 52, 0.35), 0 2px 6px rgba(17, 30, 52, 0.06);
+	--sheen: 0.9;
+	--inner-top: rgba(255, 255, 255, 0.85);
+
+	--accent: #0f7d75;
+	--accent-soft: rgba(15, 125, 117, 0.14);
+	--field: rgba(255, 255, 255, 0.42);
+	--field-edge: rgba(19, 28, 41, 0.1);
+	--strand-alpha: 0.5;
+	--check-ink: #ffffff;
+
+	/* branch type hues — colour carries the type, everywhere it appears */
+	--t-none: #6b7a90;
+	--t-feature: #2f9e6a;
+	--t-bugfix: #c9860f;
+	--t-hotfix: #d93b41;
+	--t-release: #7c4de0;
+	--t-chore: #64748b;
+	--t-docs: #2f6fe0;
+	--t-refactor: #0d9488;
+	--t-test: #d63f8f;
+
+	--r-lg: 24px;
+	--r-md: 16px;
+
+	--font-ui: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
+	--font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg-1: #0d1b2a;
+		--bg-2: #123f45;
+		--bg-3: #2a1b3d;
+		--bg-base: #080d15;
+
+		--ink: #eef3fa;
+		--ink-2: #a7b5c9;
+		--ink-3: #71809a;
+
+		--glass: rgba(255, 255, 255, 0.07);
+		--glass-strong: rgba(255, 255, 255, 0.1);
+		--glass-edge-low: rgba(255, 255, 255, 0.08);
+		--glass-shadow: 0 26px 60px -20px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.3);
+		--sheen: 0.35;
+		--inner-top: rgba(255, 255, 255, 0.28);
+
+		--accent: #5ee0d0;
+		--accent-soft: rgba(94, 224, 208, 0.16);
+		--field: rgba(8, 14, 24, 0.3);
+		--field-edge: rgba(255, 255, 255, 0.1);
+		--strand-alpha: 0.75;
+		--check-ink: #06131a;
+
+		--t-none: #8f9db3;
+		--t-feature: #4ed494;
+		--t-bugfix: #ecb84a;
+		--t-hotfix: #ff6b70;
+		--t-release: #a98bff;
+		--t-chore: #94a3b8;
+		--t-docs: #6ba4ff;
+		--t-refactor: #46d6c4;
+		--t-test: #ff77bb;
+	}
+}
+
+:root[data-theme='light'] {
+	--bg-1: #eef2f8;
+	--bg-2: #f6e9f0;
+	--bg-3: #e2f0ec;
+	--bg-base: #e7ecf3;
+
+	--ink: #131c29;
+	--ink-2: #43536a;
+	--ink-3: #74839a;
+
+	--glass: rgba(255, 255, 255, 0.5);
+	--glass-strong: rgba(255, 255, 255, 0.66);
+	--glass-edge-low: rgba(19, 28, 41, 0.08);
+	--glass-shadow: 0 22px 50px -18px rgba(17, 30, 52, 0.35), 0 2px 6px rgba(17, 30, 52, 0.06);
+	--sheen: 0.9;
+	--inner-top: rgba(255, 255, 255, 0.85);
+
+	--accent: #0f7d75;
+	--accent-soft: rgba(15, 125, 117, 0.14);
+	--field: rgba(255, 255, 255, 0.42);
+	--field-edge: rgba(19, 28, 41, 0.1);
+	--strand-alpha: 0.5;
+	--check-ink: #ffffff;
+
+	--t-none: #6b7a90;
+	--t-feature: #2f9e6a;
+	--t-bugfix: #c9860f;
+	--t-hotfix: #d93b41;
+	--t-release: #7c4de0;
+	--t-chore: #64748b;
+	--t-docs: #2f6fe0;
+	--t-refactor: #0d9488;
+	--t-test: #d63f8f;
+}
+
+:root[data-theme='dark'] {
+	--bg-1: #0d1b2a;
+	--bg-2: #123f45;
+	--bg-3: #2a1b3d;
+	--bg-base: #080d15;
+
+	--ink: #eef3fa;
+	--ink-2: #a7b5c9;
+	--ink-3: #71809a;
+
+	--glass: rgba(255, 255, 255, 0.07);
+	--glass-strong: rgba(255, 255, 255, 0.1);
+	--glass-edge-low: rgba(255, 255, 255, 0.08);
+	--glass-shadow: 0 26px 60px -20px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.3);
+	--sheen: 0.35;
+	--inner-top: rgba(255, 255, 255, 0.28);
+
+	--accent: #5ee0d0;
+	--accent-soft: rgba(94, 224, 208, 0.16);
+	--field: rgba(8, 14, 24, 0.3);
+	--field-edge: rgba(255, 255, 255, 0.1);
+	--strand-alpha: 0.75;
+	--check-ink: #06131a;
+
+	--t-none: #8f9db3;
+	--t-feature: #4ed494;
+	--t-bugfix: #ecb84a;
+	--t-hotfix: #ff6b70;
+	--t-release: #a98bff;
+	--t-chore: #94a3b8;
+	--t-docs: #6ba4ff;
+	--t-refactor: #46d6c4;
+	--t-test: #ff77bb;
+}

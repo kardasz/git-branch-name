@@ -1,0 +1,274 @@
+---
+import { BRANCH_TYPES, hueOf } from '../lib/branch-types';
+import { DEFAULT_LENGTH, MAX_LENGTH, MIN_LENGTH } from '../lib/branch-name';
+
+const check = `<svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2 4.7 9 10 3.2"></path></svg>`;
+---
+
+<aside class="glass options" id="options">
+	<div class="group">
+		<span class="eyebrow">Branch types</span>
+		<div class="types">
+			{
+				BRANCH_TYPES.map((type) => (
+					<label class="ctl" style={`--mark: ${hueOf(type)}`}>
+						<input type="checkbox" name="branch-type" value={type} checked />
+						<span class="box" set:html={check} />
+						<span class="mono">{type}/</span>
+						<span class="swatch" />
+					</label>
+				))
+			}
+		</div>
+	</div>
+
+	<div class="group">
+		<span class="eyebrow">Word separator</span>
+		<div class="seg">
+			<label class="ctl">
+				<input type="radio" name="separator" value="-" checked />
+				<span class="radio"></span>
+				<span class="mono">-</span><span class="cap">hyphen</span>
+			</label>
+			<label class="ctl">
+				<input type="radio" name="separator" value="_" />
+				<span class="radio"></span>
+				<span class="mono">_</span><span class="cap">underscore</span>
+			</label>
+		</div>
+	</div>
+
+	<div class="group">
+		<span class="eyebrow">Formatting</span>
+		<label class="ctl">
+			<input type="checkbox" id="lowercase" checked />
+			<span class="box" set:html={check} />
+			Lowercase
+		</label>
+		<label class="ctl">
+			<input type="checkbox" id="lowercase-ticket" />
+			<span class="box" set:html={check} />
+			Lowercase <span class="mono">TICKET-123</span>
+		</label>
+		<label class="ctl">
+			<input type="checkbox" id="include-date" />
+			<span class="box" set:html={check} />
+			Include date
+		</label>
+	</div>
+
+	<div class="group">
+		<div class="stepper">
+			<label for="max-length">Max length</label>
+			<input
+				type="number"
+				id="max-length"
+				value={DEFAULT_LENGTH}
+				min={MIN_LENGTH}
+				max={MAX_LENGTH}
+				step="1"
+			/>
+		</div>
+	</div>
+</aside>
+
+<style>
+	.options {
+		padding: 18px;
+	}
+
+	.group + .group {
+		margin-top: 18px;
+		padding-top: 18px;
+		border-top: 1px solid var(--glass-edge-low);
+	}
+
+	.group > .eyebrow {
+		display: block;
+		margin-bottom: 10px;
+	}
+
+	.types {
+		display: flex;
+		flex-direction: column;
+		gap: 1px;
+	}
+
+	.ctl {
+		display: flex;
+		align-items: center;
+		gap: 9px;
+		padding: 6px 8px;
+		margin: 0 -8px;
+		border-radius: 9px;
+		cursor: pointer;
+		font-size: 13.5px;
+		letter-spacing: -0.006em;
+		color: var(--ink);
+		transition: background 0.14s ease;
+	}
+
+	.ctl:hover {
+		background: var(--field);
+	}
+
+	/* The native control stays focusable; the box next to it is what you see. */
+	.ctl input {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.box,
+	.radio {
+		width: 17px;
+		height: 17px;
+		flex: none;
+		display: grid;
+		place-items: center;
+		background: var(--field);
+		border: 1px solid var(--field-edge);
+		box-shadow: inset 0 1px 1px rgba(10, 18, 30, 0.05);
+		transition:
+			background 0.14s ease,
+			border-color 0.14s ease;
+	}
+
+	.box {
+		border-radius: 5.5px;
+	}
+
+	.radio {
+		border-radius: 50%;
+	}
+
+	.box :global(svg) {
+		opacity: 0;
+		color: var(--check-ink);
+		transform: scale(0.7);
+		transition:
+			opacity 0.14s ease,
+			transform 0.14s cubic-bezier(0.2, 1.4, 0.5, 1);
+	}
+
+	.radio::after {
+		content: '';
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--check-ink);
+		opacity: 0;
+		transform: scale(0.5);
+		transition:
+			opacity 0.14s ease,
+			transform 0.14s cubic-bezier(0.2, 1.4, 0.5, 1);
+	}
+
+	.ctl input:checked ~ .box,
+	.ctl input:checked ~ .radio {
+		background: var(--mark, var(--accent));
+		border-color: var(--mark, var(--accent));
+	}
+
+	.ctl input:checked ~ .box :global(svg) {
+		opacity: 1;
+		transform: none;
+	}
+
+	.ctl input:checked ~ .radio::after {
+		opacity: 1;
+		transform: none;
+	}
+
+	.ctl input:focus-visible ~ .box,
+	.ctl input:focus-visible ~ .radio {
+		box-shadow: 0 0 0 3px var(--accent-soft);
+	}
+
+	/* Echoes the colour each type carries in the result list. */
+	.ctl .swatch {
+		width: 7px;
+		height: 7px;
+		flex: none;
+		margin-left: auto;
+		border-radius: 50%;
+		background: var(--mark);
+		opacity: 0.85;
+	}
+
+	.ctl .mono {
+		font-family: var(--font-mono);
+		font-size: 13px;
+	}
+
+	.seg {
+		display: flex;
+		gap: 6px;
+	}
+
+	.seg .ctl {
+		flex: 1;
+		justify-content: center;
+		margin: 0;
+		padding: 8px 6px;
+		border-radius: 10px;
+		background: var(--field);
+		border: 1px solid var(--field-edge);
+	}
+
+	.seg .ctl:has(input:checked) {
+		background: var(--accent-soft);
+		border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+		color: var(--accent);
+	}
+
+	.seg .ctl:has(input:focus-visible) {
+		box-shadow: 0 0 0 3px var(--accent-soft);
+		border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+	}
+
+	.seg .ctl .radio {
+		display: none;
+	}
+
+	.seg .ctl .mono {
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.seg .ctl .cap {
+		font-size: 12px;
+		color: inherit;
+	}
+
+	.stepper {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+		font-size: 13.5px;
+	}
+
+	#max-length {
+		width: 74px;
+		padding: 7px 10px;
+		border-radius: 9px;
+		border: 1px solid var(--field-edge);
+		background: var(--field);
+		color: var(--ink);
+		font-family: var(--font-mono);
+		font-variant-numeric: tabular-nums;
+		font-size: 13px;
+		text-align: right;
+		box-shadow: inset 0 1px 1px rgba(10, 18, 30, 0.05);
+	}
+
+	#max-length:focus {
+		outline: none;
+		border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+		box-shadow: 0 0 0 3.5px var(--accent-soft);
+	}
+
+	/* Stacked, the panel stays below the input and results: paste and copy is
+	   the everyday path, options are set once. */
+</style>

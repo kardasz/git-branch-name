@@ -1,0 +1,23 @@
+{
+  "name": "git-branch-name",
+  "type": "module",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Krzysztof Kardasz <krzysztof@kardasz.eu> (https://kardasz.eu)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kardasz/git-branch-name.git"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^7.1.6"
+  }
+}

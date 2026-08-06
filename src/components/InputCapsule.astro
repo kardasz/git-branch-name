@@ -1,0 +1,94 @@
+---
+// The only input. Names regenerate on every keystroke, so there is no submit.
+const placeholder = 'https://acme.atlassian.net/browse/JIRA-123123 Add pagination to the feed query';
+---
+
+<div class="glass capsule">
+	<div class="capsule-head">
+		<span class="eyebrow">Description</span>
+		<span class="detected" id="detected"><b id="detected-key"></b> detected</span>
+	</div>
+
+	<textarea
+		id="source"
+		spellcheck="false"
+		autocomplete="off"
+		autofocus
+		aria-label="Task description, JIRA link or ticket ID"
+		placeholder={placeholder}></textarea>
+</div>
+
+<style>
+	.capsule {
+		padding: 16px 18px 18px;
+	}
+
+	.capsule-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		margin-bottom: 10px;
+		min-height: 22px;
+	}
+
+	textarea {
+		display: block;
+		width: 100%;
+		min-height: 104px;
+		resize: vertical;
+		padding: 13px 15px;
+		border-radius: var(--r-md);
+		border: 1px solid var(--field-edge);
+		background: var(--field);
+		color: var(--ink);
+		font-family: var(--font-mono);
+		font-size: 13.5px;
+		line-height: 1.6;
+		letter-spacing: -0.01em;
+		box-shadow: inset 0 1px 2px rgba(10, 18, 30, 0.06);
+		transition:
+			border-color 0.18s ease,
+			box-shadow 0.18s ease;
+	}
+
+	textarea::placeholder {
+		color: var(--ink-3);
+	}
+
+	textarea:focus {
+		outline: none;
+		border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+		box-shadow:
+			0 0 0 3.5px var(--accent-soft),
+			inset 0 1px 2px rgba(10, 18, 30, 0.06);
+	}
+
+	/* Confirms the parser found a ticket key, without stealing attention. */
+	.detected {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 3px 9px;
+		border-radius: 999px;
+		background: var(--accent-soft);
+		color: var(--accent);
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		letter-spacing: 0.01em;
+		opacity: 0;
+		transform: translateY(-2px);
+		transition:
+			opacity 0.2s ease,
+			transform 0.2s ease;
+	}
+
+	.detected.on {
+		opacity: 1;
+		transform: none;
+	}
+
+	.detected b {
+		font-weight: 600;
+	}
+</style>
