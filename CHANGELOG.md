@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-10-02
+
+### Added
+
+- Optional Google Analytics 4, loaded only after explicit analytics consent.
+- A cookie banner with equally prominent accept and reject buttons, a remembered
+  choice for 180 days, and footer settings to change or withdraw consent.
+- A privacy and cookie notice explaining local storage, analytics and visitor rights.
+
+### Changed
+
+- Privacy descriptions now explain optional analytics while preserving local-only
+  processing of pasted text and generated branch names.
+
 ## [1.3.0] - 2026-08-06
 
 The tool stays free and ad-free; this adds a quiet way to chip in if it saves
@@ -100,7 +114,8 @@ no analytics, and nothing is sent anywhere.
   it is remembered across visits.
 - A git graph drifts behind the glass surface of the page.
 
-[Unreleased]: https://github.com/kardasz/git-branch-name/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/kardasz/git-branch-name/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/kardasz/git-branch-name/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/kardasz/git-branch-name/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/kardasz/git-branch-name/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/kardasz/git-branch-name/compare/v1.0.0...v1.1.0

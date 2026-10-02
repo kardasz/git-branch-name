@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A single-page, fully static branch-name generator ([gitbranch.name](https://gitbranch.name)) built with Astro 7 and vanilla TypeScript. Paste a JIRA link, a ticket key, or a plain title; every branch-name variant is recomputed on each keystroke and copied on click. There is no backend, no analytics, and no network traffic at runtime — keep it that way.
+A fully static branch-name generator ([gitbranch.name](https://gitbranch.name)) built with Astro 7 and vanilla TypeScript, with a privacy notice at `/privacy/`. Paste a JIRA link, a ticket key, or a plain title; every branch-name variant is recomputed on each keystroke and copied on click. There is no backend. Optional GA4 loads only after explicit consent; keep generator input and branch names out of analytics and preserve the consent gate.
 
 ## Commands
 
@@ -15,7 +15,7 @@ A single-page, fully static branch-name generator ([gitbranch.name](https://gitb
 | `npm run build`   | Static build to `./dist/`           |
 | `npm run preview` | Serve the built site                |
 
-There is no test suite, linter, or formatter configured, and `astro check` is not installed (`@astrojs/check`/`typescript` are absent). `npm run build` is the only verification gate — run it before tagging, since `.github/workflows/pages.yml` deploys to GitHub Pages on every `v*` tag.
+Run `npm test` (Node 22.13+; CI uses Node 24) for consent lifecycle regression tests and `npm run build` before tagging. There is no linter or formatter configured, and `astro check` is not installed (`@astrojs/check`/`typescript` are absent). `.github/workflows/pages.yml` deploys to GitHub Pages on every `v*` tag.
 
 ## Architecture
 

@@ -64,7 +64,15 @@ The generator pulls the ticket key out of a JIRA URL or raw text, slugifies the 
 | `Max length`           | Character budget for the whole name, prefix included (default `60`)                                                                                              |
 | `Theme`                | Light, dark, or match the system — the default                                                                                                                   |
 
-Everything runs in the browser. There is no backend, no analytics, and nothing is sent anywhere.
+Branch generation runs entirely in the browser. Pasted text and generated names are not sent to Google Analytics. Optional GA4 (`G-CTBPCXYPXK`) loads only after explicit analytics consent. Visitors can accept or reject with equal prominence, and change or withdraw consent through **Cookie settings** in the footer. The consent choice expires after 180 days; analytics cookies are removed on rejection. See `/privacy/` for the privacy and cookie notice.
+
+### Analytics administration
+
+The browser uses basic consent mode: no Google tag is loaded before consent, and advertising consent remains denied. Google signals and ad personalization are disabled. The tag uses host-only analytics cookies with a 180-day lifetime and no automatic renewal. The current page's query string, fragment and referring URL are excluded from the configured page metadata. No generator input or branch-name events are sent.
+
+Before publishing, verify the controller/contact details in `src/pages/privacy.astro`, confirm the Google Analytics data-processing terms and international-transfer safeguards, and set/document the property's actual event-data retention in that notice. Cookie expiry does not configure server-side data retention. Disable Enhanced Measurement features not needed for page-visit statistics (especially form interactions, site search and outbound clicks) in the GA4 stream; these are managed in Google's admin console, not by this repository. Review Google-side data sharing and linked products as well.
+
+Consent handling can be checked with `npm test` (Node 22.13+; CI uses Node 24). Increment `CONSENT_VERSION` in `src/scripts/consent.ts` when purposes or consent information materially change, so existing visitors are asked again.
 
 ## 💖 Support
 

@@ -9,6 +9,9 @@ const license = `${repository}/blob/main/LICENSE`;
 ---
 
 <footer class="footer">
+	<a href="/privacy/">Privacy &amp; cookies</a>
+	<button type="button" data-cookie-settings hidden>Cookie settings</button>
+	<span class="dot" aria-hidden="true">&middot;</span>
 	<!-- The compiler drops whitespace around expressions, so the gap is explicit. -->
 	<p>&copy;&nbsp;{year}&nbsp;<a href="https://kardasz.eu" target="_blank" rel="noopener noreferrer">Krzysztof Kardasz</a></p>
 
@@ -66,18 +69,19 @@ const license = `${repository}/blob/main/LICENSE`;
 		margin: 0;
 	}
 
-	a {
+	a, button {
 		color: var(--ink-2);
 		text-decoration: none;
 		border-radius: 6px;
 		transition: color 0.16s ease;
 	}
 
-	a:hover {
+	button { font: inherit; padding: 0; background: none; border: 0; cursor: pointer; min-height: 44px; }
+	a:hover, button:hover {
 		color: var(--accent);
 	}
 
-	a:focus-visible {
+	a:focus-visible, button:focus-visible {
 		outline: none;
 		box-shadow: 0 0 0 3px var(--accent-soft);
 		color: var(--accent);

@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import ThemeSwitch from '../components/ThemeSwitch.astro';
+---
+
+<Layout title="Privacy & cookies — Git Branch Name" description="How Git Branch Name uses local storage, optional Google Analytics cookies, and your privacy choices.">
+	<div class="page">
+		<header><a href="/">← Back to the generator</a><ThemeSwitch /></header>
+		<main class="glass policy">
+			<h1>Privacy &amp; cookies</h1>
+			<p>Last updated: 2 October 2026</p>
+			<h2>Who is responsible?</h2>
+			<p>Git Branch Name is operated by Krzysztof Kardasz. For privacy questions or to exercise your rights, contact <a href="mailto:krzysztof@kardasz.eu">krzysztof@kardasz.eu</a>.</p>
+			<h2>Your pasted text stays in your browser</h2>
+			<p>The generator processes ticket links, keys, titles and branch names locally. We do not send the text you enter or the generated branch names to Google Analytics. Using the generator does not require consent to analytics.</p>
+			<h2>Optional analytics</h2>
+			<p>Only after you accept analytics do we load Google Analytics 4, provided by Google Ireland Limited, to understand visits and improve the site. The legal basis is your consent (Article 6(1)(a) GDPR). Google processes cookie identifiers, page visits, interactions and browser/device information. Your IP address is involved in the connection to Google; GA4 does not log or store individual IP addresses.</p>
+			<p>Advertising storage, advertising user data, ad personalization and Google signals are disabled in this site's tag. We exclude the current URL's query string and fragment and do not pass the referring URL to Analytics.</p>
+			<p>Google may process data outside the European Economic Area, including in the United States. See <a href="https://policies.google.com/technologies/partner-sites">how Google uses data from partner sites</a>, <a href="https://policies.google.com/privacy">Google's privacy policy</a>, and <a href="https://business.safety.google/adsprocessorterms/">Google's data processing terms and transfer safeguards</a>.</p>
+			<h2>What is stored on your device?</h2>
+			<ul>
+				<li><strong>gbn-cookie-consent</strong> (local storage): remembers acceptance or rejection, the time and notice version for 180 days. This is necessary to respect your choice; it is not used for tracking.</li>
+				<li><strong>gbn-theme</strong> (local storage): remembers a light or dark theme you explicitly choose, until you select the system theme or clear site data.</li>
+				<li><strong>_ga and _ga_CTBPCXYPXK</strong> (Google Analytics cookies): identify a browser and maintain session information, only with consent. The tag sets a maximum lifetime of 180 days without automatic renewal. Withdrawing consent removes this site's analytics cookies.</li>
+			</ul>
+			<p>The lifetime of cookies on your device is separate from retention of data already collected by Google Analytics. That retention depends on the Analytics property's settings; contact us for details.</p>
+			<h2>Change your mind at any time</h2>
+			<p>Open “Cookie settings” in the footer and choose “Reject analytics” to withdraw consent, or “Accept analytics” to enable it. Acceptance and rejection are remembered for the same period. We ask again after 180 days or if the consent notice version changes. If browser storage is blocked, your choice may last only for the current page.</p>
+			<p>Withdrawal stops future analytics collection and removes analytics cookies; it does not affect the lawfulness of processing before withdrawal or automatically delete previously collected data. Closing the banner or continuing to use the site does not grant consent.</p>
+			<h2>Your rights</h2>
+			<p>Where applicable, you may request access, correction, deletion, restriction or portability of your personal data, and object to processing based on legitimate interests. You may withdraw consent at any time and complain to your local supervisory authority, including <a href="https://uodo.gov.pl/">Poland's UODO</a>.</p>
+			<h2>Hosting and external links</h2>
+			<p>The site is hosted on GitHub Pages. GitHub processes technical request data, including IP addresses, to deliver and secure the site under its <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">privacy statement</a>. External links only take you to another service when you follow them; those services have their own privacy policies.</p>
+		</main>
+		<Footer />
+	</div>
+</Layout>
+
+<style>
+	header { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+	.policy { padding: clamp(20px, 5vw, 48px); }
+	h1 { margin-top: 0; font-size: clamp(26px, 5vw, 38px); }
+	h2 { margin-top: 28px; font-size: 20px; }
+	p, li { max-width: 78ch; color: var(--ink-2); }
+	li + li { margin-top: 12px; }
+	a { color: var(--accent); text-underline-offset: 3px; overflow-wrap: anywhere; }
+	a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
